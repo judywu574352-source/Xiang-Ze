@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的離線一站式工具箱</title>
+    <style>
+        /* 基礎樣式 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        main {
+            display: flex; /* 使用 Flexbox 進行佈局 */
+            padding: 20px;
+            gap: 20px; /* 區塊間距 */
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            flex: 1; /* 讓兩個區塊平均分配空間 */
+            min-width: 300px;
+        }
+
+        h2 {
+            color: #4CAF50;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        /* 輸入/按鈕樣式 */
+        input[type="text"], textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* 確保 padding 不會增加寬度 */
+        }
+
+        textarea {
+            height: 200px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* 待辦清單樣式 */
+        #todo-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        #todo-list li {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-left: 5px solid #4CAF50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #888;
+            border-left-color: #aaa;
+        }
+
+        .delete-btn {
+            background: none;
+            color: red;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🛠️ 離線工具箱</h1>
+        <p>所有資料將安全地儲存在您的瀏覽器中 (離線功能)。</p>
+    </header>
+
+    <main>
+        <section id="todo-section">
+            <h2>待辦清單</h2>
+            <input type="text" id="todo-input" placeholder="輸入待辦事項...">
+            <button onclick="addTodo()">新增事項</button>
+            <ul id="todo-list"></ul>
+        </section>
+
+        <section id="notes-section">
+            <h2>快速筆記</h2>
+            <textarea id="quick-note" placeholder="在這裡寫下您的筆記。它會自動儲存。"></textarea>
+            <button onclick="saveNote()">手動儲存筆記</button>
+            <p style="font-size: 0.9em; color: #777; margin-top: 10px;">注意：筆記在您輸入時會嘗試自動儲存。</p>
+        </section>
+    </main>
+
+    <script>
+        // ----------------------------------------------------
+        // 1. 待辦清單功能 (使用 localStorage)
+        // ----------------------------------------------------
+
+        // 載入清單
+        function loadTodos() {
+            const todos = JSON.parse(localStorage.getItem('todos')) || [];
+            const listElement = document.getElementById('todo-list');
+            listElement.innerHTML = ''; // 清空現有列表
+
+            todos.forEach((todo, index) => {
+                const li = document.createElement('li');
+                li.textContent = todo.text;
+                li.className = todo.completed ? 'completed' : '';
+                
+                // 標記完成/未完成 (點擊文字)
+                li.onclick = () => { toggleTodo(index); };
+                
+                // 刪除按鈕
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'X';
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.onclick = (event) => {
+                    event.stopPropagation(); // 阻止觸發 li 的點擊事件
+                    deleteTodo(index);
+                };
+
+                li.appendChild(deleteBtn);
+                listElement.appendChild(li);
+            });
+        }
+
+        // 新增事項
+        function addTodo() {
+            const input = document.getElementById('todo-input');
+            const text = input.value.trim();
+
+            if (text === '') return;
+
+            const todos = JSON.parse(localStorage.getItem('todos')) || [];
+            todos.push({ text: text, completed: false });
+            localStorage.setItem('todos', JSON.stringify(todos));
+
+            input.value = ''; // 清空輸入框
+            loadTodos(); // 更新顯示
+        }
+
+        // 切換完成狀態
+        function toggleTodo(index) {
+            const todos = JSON.parse(localStorage.getItem('todos'));
+            todos[index].completed = !todos[index].completed;
+            localStorage.setItem('todos', JSON.stringify(todos));
+            loadTodos();
+        }
+
+        // 刪除事項
+        function deleteTodo(index) {
+            const todos = JSON.parse(localStorage.getItem('todos'));
+            todos.splice(index, 1); // 從陣列中移除該項目
+            localStorage.setItem('todos', JSON.stringify(todos));
+            loadTodos();
+        }
+
+        // ----------------------------------------------------
+        // 2. 快速筆記功能 (使用 localStorage)
+        // ----------------------------------------------------
+
+        const noteTextarea = document.getElementById('quick-note');
+
+        // 載入筆記
+        function loadNote() {
+            const savedNote = localStorage.getItem('quickNote');
+            if (savedNote) {
+                noteTextarea.value = savedNote;
+            }
+        }
+
+        // 手動儲存筆記
+        function saveNote() {
+            const noteContent = noteTextarea.value;
+            localStorage.setItem('quickNote', noteContent);
+            alert('筆記已儲存!');
+        }
+
+        // 自動儲存 (使用者輸入時)
+        noteTextarea.addEventListener('input', () => {
+            // 這個功能會在使用者輸入時持續儲存，提供更好的離線體驗
+            localStorage.setItem('quickNote', noteTextarea.value);
+        });
+
+        // ----------------------------------------------------
+        // 頁面啟動時執行
+        // ----------------------------------------------------
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTodos(); // 載入待辦清單
+            loadNote();  // 載入快速筆記
+        });
+
+    </script>
+</body>
+</html>
