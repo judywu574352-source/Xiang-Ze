@@ -3,66 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的離線一站式工具箱</title>
+    <title>襄澤專案顧問工作室 - 在混亂的工程裡，幫你把節點排清楚。</title>
     <style>
-        /* 基礎樣式 */
+        /* 基礎樣式 - 調整配色以符合「顧問/工程」的穩重感 */
         body {
-            font-family: Arial, sans-serif;
+            font-family: '微軟正黑體', 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f7f6;
+            background-color: #f0f2f5; /* 輕微的灰色背景 */
             color: #333;
         }
 
         header {
-            background-color: #4CAF50;
+            background-color: #004c8c; /* 深藍色 - 專業、穩重 */
             color: white;
-            padding: 15px 20px;
+            padding: 25px 20px;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            max-width: 800px;
+            margin: 10px auto 0;
+            line-height: 1.6;
         }
 
         main {
             display: flex; /* 使用 Flexbox 進行佈局 */
-            padding: 20px;
-            gap: 20px; /* 區塊間距 */
-            max-width: 1200px;
+            padding: 30px 20px;
+            gap: 30px; /* 區塊間距 */
+            max-width: 1400px; /* 增加最大寬度 */
             margin: auto;
         }
 
         section {
             background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            flex: 1; /* 讓兩個區塊平均分配空間 */
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            flex: 1; 
             min-width: 300px;
         }
 
+        /* 服務介紹區塊特殊樣式 */
+        #introduction-section {
+            flex: 1.5; /* 給予介紹區塊多一點空間 */
+            order: -1; /* 讓它顯示在最前面 */
+        }
+        
+        #tools-section {
+            flex: 1; /* 工具區塊 */
+        }
+
         h2 {
-            color: #4CAF50;
+            color: #004c8c;
             border-bottom: 2px solid #e0e0e0;
             padding-bottom: 10px;
             margin-top: 0;
+            font-size: 1.6em;
         }
 
-        /* 輸入/按鈕樣式 */
+        /* 服務內容列表樣式 */
+        .service-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .service-list li {
+            background-color: #e6f0ff; /* 淺藍色背景 */
+            margin-bottom: 12px;
+            padding: 15px;
+            border-left: 5px solid #007bff; /* 亮藍色邊條 */
+            border-radius: 5px;
+            line-height: 1.5;
+        }
+        
+        .service-list strong {
+            color: #004c8c;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* 離線工具箱的樣式 (保留原有結構但調整配色) */
         input[type="text"], textarea {
             width: calc(100% - 22px);
             padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            box-sizing: border-box; /* 確保 padding 不會增加寬度 */
+            box-sizing: border-box; 
         }
 
         textarea {
-            height: 200px;
+            height: 150px; /* 稍微縮短高度 */
             resize: vertical;
         }
 
         button {
-            background-color: #007bff;
+            background-color: #007bff; /* 亮藍色 */
             color: white;
             padding: 10px 15px;
             border: none;
@@ -75,7 +118,6 @@
             background-color: #0056b3;
         }
 
-        /* 待辦清單樣式 */
         #todo-list {
             list-style: none;
             padding: 0;
@@ -85,7 +127,7 @@
             background-color: #f9f9f9;
             padding: 10px;
             margin-bottom: 5px;
-            border-left: 5px solid #4CAF50;
+            border-left: 5px solid #007bff; /* 亮藍色邊條 */
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -101,7 +143,7 @@
 
         .delete-btn {
             background: none;
-            color: red;
+            color: #dc3545; /* 紅色 */
             border: none;
             padding: 5px;
             cursor: pointer;
@@ -113,23 +155,59 @@
 <body>
 
     <header>
-        <h1>🛠️ 離線工具箱</h1>
-        <p>所有資料將安全地儲存在您的瀏覽器中 (離線功能)。</p>
+        <h1>🏗️ 襄澤專案顧問工作室</h1>
+        <p>「在混亂的工程裡，幫你把節點排清楚。」</p>
+        <p style="font-style: italic; margin-top: 20px; font-size: 0.95em;">我是宜襄，一位在公共工程第一線待了十多年的專案經理。</p>
+        <p style="font-size: 1em;">襄澤專案顧問工作室，專門協助工程團隊在**高壓、複雜、多單位協調**的環境下——把進度、責任、與溝通重新排回有秩序的軌道。我不做華麗的口號，只做「看得懂現場、也翻得懂公文」的實務整理。</p>
     </header>
 
     <main>
-        <section id="todo-section">
-            <h2>待辦清單</h2>
-            <input type="text" id="todo-input" placeholder="輸入待辦事項...">
-            <button onclick="addTodo()">新增事項</button>
-            <ul id="todo-list"></ul>
+        
+        <section id="introduction-section">
+            <h2>② 服務內容（草案版）</h2>
+            <ul class="service-list">
+                <li>
+                    <strong>工程專案體檢與進度規劃</strong>
+                    <p>－ 里程碑拆解、關鍵路徑分析、延遲風險盤點</p>
+                </li>
+                <li>
+                    <strong>公文、簡報與服務建議書輔導</strong>
+                    <p>－ 將技術內容翻成「主辦聽得懂」的版本，包含架構、用詞與邏輯調整</p>
+                </li>
+                <li>
+                    <strong>履約爭議與協調溝通策略</strong>
+                    <p>－ 停工、設計未定、他單位介面等議題之鋪陳、日報與會議紀錄寫法建議</p>
+                </li>
+                <li>
+                    <strong>內部教育訓練與顧問諮詢</strong>
+                    <p>－ 針對年輕工程師的專案思維、日報／會議紀錄／對外溝通訓練</p>
+                </li>
+                <li>
+                    <strong>客製化技術服務顧問</strong>
+                    <p>－ 根據客戶的特定需求，提供專精的實務指導與解決方案。</p>
+                </li>
+            </ul>
         </section>
 
-        <section id="notes-section">
-            <h2>快速筆記</h2>
-            <textarea id="quick-note" placeholder="在這裡寫下您的筆記。它會自動儲存。"></textarea>
-            <button onclick="saveNote()">手動儲存筆記</button>
-            <p style="font-size: 0.9em; color: #777; margin-top: 10px;">注意：筆記在您輸入時會嘗試自動儲存。</p>
+        <section id="tools-section">
+            <h2>🛠️ 專案輔助工具箱（離線）</h2>
+            <p style="font-size: 0.9em; color: #555; margin-bottom: 20px;">此工具箱安全地將資料儲存在您的瀏覽器中，適用於臨時記錄或離線時使用。</p>
+            
+            <section id="todo-section" style="padding: 0; box-shadow: none;">
+                <h3>待辦清單</h3>
+                <input type="text" id="todo-input" placeholder="輸入待辦事項...">
+                <button onclick="addTodo()">新增事項</button>
+                <ul id="todo-list"></ul>
+            </section>
+
+            <hr style="border-top: 1px solid #eee; margin: 20px 0;">
+
+            <section id="notes-section" style="padding: 0; box-shadow: none;">
+                <h3>快速筆記</h3>
+                <textarea id="quick-note" placeholder="在這裡寫下您的筆記。它會自動儲存。"></textarea>
+                <button onclick="saveNote()">手動儲存筆記</button>
+                <p style="font-size: 0.85em; color: #777; margin-top: 10px;">提醒：筆記在您輸入時會嘗試自動儲存。</p>
+            </section>
         </section>
     </main>
 
