@@ -347,7 +347,29 @@
       border:1px solid var(--rule);transition:background .25s;
     }
     .paid-dl:hover{background:var(--accent);color:var(--paper)}
+.beta-download{
+    display:inline-block;
+    padding:12px 24px;
+    border:1px solid #b79b85;
+    background:#f5f1eb;
+    color:#6d4d3b;
+    text-decoration:none;
+    font-size:18px;
+    letter-spacing:1px;
+    transition:0.3s;
+}
 
+.beta-download:hover{
+    background:#6d4d3b;
+    color:#fff;
+}
+
+.beta-note{
+    font-size:12px;
+    color:#8a8176;
+    margin-top:10px;
+    line-height:1.6;
+}
     /* ── CONTACT ── */
     #contact{padding:0;background:var(--paper-2);color:var(--ink)}
     .contact-grid{display:grid;grid-template-columns:1fr 1fr;min-height:560px}
@@ -2083,27 +2105,31 @@
 <div class="tool-paid-section reveal">
 <h3>專業版<em>程式下載</em></h3>
 <p class="tool-paid-sub">以下為襄澤工作室開發之專業版工具，授權購買後可下載使用。<br/>如有客製需求歡迎來信洽詢。</p>
+
 <div class="paid-grid">
 <div class="paid-card earlybird-paid">
 <div class="paid-info">
 <h4>批量照片自動貼入 VBA <span class="mini-badge">早鳥</span></h4>
 <p>工程照片自動貼入 Word 的 VBA 工具，可依資料夾與照片日期批量整理，自動對位版面、插入照片與說明欄位，適合施工照片、查驗紀錄與送審附件快速編排。</p>
-<a class="tool-btn"
-   href="photo-auto-insert.xlsm"
-   download>
+
+<a class="tool-btn beta-download"
+   href="./photo-auto-insert.xlsm"
+   download="photo-auto-insert.xlsm">
    ⬇ BETA版試用
 </a>
 
-<div style="font-size:12px; color:#8a8176; margin-top:8px; line-height:1.6;">
-※ 首次使用請於 Excel 啟用巨集內容（已附教學）<br>
-※ 僅支援 Windows Excel 桌面版
+<div class="beta-note">
+  ※ 首次使用請於 Excel 啟用巨集內容（已附教學）<br>
+  ※ 僅支援 Windows Excel 桌面版
 </div>
 </div>
+
 <div class="paid-price">
 <div class="amount">早鳥 NT$1,580</div>
 <div class="unit">原價 NT$2,180 / 永久授權<br>限量 30 組</div>
 </div>
 </div>
+
 <div class="paid-card featured-paid earlybird-paid">
 <div class="paid-info">
 <h4>圖說進度規劃工具 <span class="mini-badge">早鳥</span></h4>
